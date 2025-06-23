@@ -16,7 +16,7 @@ datasource db {
 model Map {
   id                  String          @id @default(uuid())
   name                String
-  nameShort           String          @unique
+  slug                String          @unique
   imageUrl            String
   thumbnailUrl        String
   findables           Findable[]
@@ -37,10 +37,11 @@ model GameSession {
   id                  String          @id @default(uuid())
   map                 Map             @relation(fields: [mapId], references: [id])
   mapId               String
-  playerId            String
+  playerId            String          @default(uuid())
+  playerName          String?
   startTime           DateTime        @default(now())
   endTime             DateTime?
   durationSeconds     Int?
-  playerName          String?
+  assignedFindables   Json[]
   foundFindables      String[]
 }
