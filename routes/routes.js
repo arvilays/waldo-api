@@ -2,13 +2,22 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/controller");
 
-router.post("/game/start/:slug", controller.start_game_post);
-// router.post("/game/check-findable", controller);
+// --- Game Routes ---
+router.post("/game/start/:slug", controller.start_game_post); 
+router.post(
+  "/game/findable-check/:gameSessionId/:coordinateX/:coordinateY",
+  controller.findable_post_check
+);
 
-// router.patch("/game/finish/:gameSessionId", controller);
+// --- Leaderboard Routes ---
+router.get("/leaderboard/:slug", controller.leaderboard_get); 
+router.post("/leaderboard/:gameSessionId/:name", controller.leaderboard_post); 
 
-router.get("/maps/", controller.map_get_all);
-router.get("/maps/:slug", controller.map_get_one);
-// router.get("/leaderboard/:mapId", controller);
+// --- Map Routes ---
+router.get("/maps", controller.map_get_all); 
+router.get("/maps/:slug", controller.map_get_one); 
+
+// --- Admin Routes ---
+router.delete("/cleanup/:password", controller.cleanup_post);
 
 module.exports = router;

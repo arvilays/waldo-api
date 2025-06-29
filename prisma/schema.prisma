@@ -19,6 +19,7 @@ model Map {
   slug                String          @unique
   imageUrl            String
   thumbnailUrl        String
+  imageCreator        String?
   findables           Findable[]
   gameSessions        GameSession[]
 }
@@ -44,4 +45,5 @@ model GameSession {
   durationSeconds     Int?
   assignedFindables   Json[]
   foundFindables      String[]
+  completed           Boolean         @default(false)
 }
