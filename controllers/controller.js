@@ -94,13 +94,13 @@ exports.findable_post_check = async (req, res, next) => {
     if (allFound) {
       const endTime = new Date();
       const startTime = new Date(session.startTime);
-      const durationSeconds = Math.floor((endTime - startTime) / 1000);
+      const durationMilliseconds = endTime - startTime;
 
       updatedSession = await prisma.gameSession.update({
         where: { id: gameSessionId },
         data: {
           endTime,
-          durationSeconds,
+          durationMilliseconds,
           completed: true,
         },
       });
@@ -115,7 +115,7 @@ exports.findable_post_check = async (req, res, next) => {
       gameSession: {
         id: updatedSession.id,
         foundFindables: updatedSession.foundFindables,
-        durationSeconds: updatedSession.durationSeconds,
+        durationMilliseconds: updatedSession.durationMilliseconds,
       },
     });
   } catch (error) {
@@ -156,13 +156,13 @@ exports.leaderboard_get = async (req, res, next) => {
       where: {
         map: { is: { slug } },
         playerName: { not: null },
-        durationSeconds: { not: null },
+        durationMilliseconds: { not: null },
         completed: true,
       },
-      orderBy: { durationSeconds: "asc" },
+      orderBy: { durationMilliseconds: "asc" },
       select: {
         playerName: true,
-        durationSeconds: true,
+        durationMilliseconds: true,
       },
       take: 100,
     });

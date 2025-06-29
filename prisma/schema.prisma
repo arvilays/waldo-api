@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,36 +8,36 @@ datasource db {
 }
 
 model Map {
-  id                  String          @id @default(uuid())
-  name                String
-  slug                String          @unique
-  imageUrl            String
-  thumbnailUrl        String
-  imageCreator        String?
-  findables           Findable[]
-  gameSessions        GameSession[]
+  id           String        @id @default(uuid())
+  name         String
+  slug         String        @unique
+  imageUrl     String
+  thumbnailUrl String
+  imageCreator String?
+  findables    Findable[]
+  gameSessions GameSession[]
 }
 
 model Findable {
-  id                  String          @id @default(uuid())
-  map                 Map             @relation(fields: [mapId], references: [id])
-  mapId               String
-  name                String
-  imageUrl            String
-  coordinateX         Float
-  coordinateY         Float
+  id          String @id @default(uuid())
+  mapId       String
+  name        String
+  imageUrl    String
+  coordinateX Float
+  coordinateY Float
+  map         Map    @relation(fields: [mapId], references: [id])
 }
 
 model GameSession {
-  id                  String          @id @default(uuid())
-  map                 Map             @relation(fields: [mapId], references: [id])
-  mapId               String
-  playerId            String          @default(uuid())
-  playerName          String?
-  startTime           DateTime        @default(now())
-  endTime             DateTime?
-  durationSeconds     Int?
-  assignedFindables   Json[]
-  foundFindables      String[]
-  completed           Boolean         @default(false)
+  id                String    @id @default(uuid())
+  mapId             String
+  playerId          String    @default(uuid())
+  playerName        String?
+  startTime         DateTime  @default(now())
+  endTime           DateTime?
+  durationMilliseconds   Int?
+  assignedFindables Json[]
+  foundFindables    String[]
+  completed         Boolean   @default(false)
+  map               Map       @relation(fields: [mapId], references: [id])
 }
